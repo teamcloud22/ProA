@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- 	안녕
+ 	이름: 오다희
+ 	언니 맛점 !
 </body>
 </html>
