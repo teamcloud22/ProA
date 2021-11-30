@@ -13,6 +13,5 @@ public interface MemberDao {
 	public MemberVo memberSelectOne(int no);
 	public int memberUpdateOne(MemberVo memberVo);
 	public void memberDeleteOne(int no);
-	public int memberSelectTotalCount(String keyword, String searchOption);
-
+	public int memberSelectTotalCount(String keyword, String searchOption); 
 }

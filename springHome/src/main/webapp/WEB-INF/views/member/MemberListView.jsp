@@ -72,7 +72,9 @@ table {
 		<tr>
 			<td>${memberVo.no}</td>
 			<td>
-				<a href='./update.do?no=${memberVo.no}'>${memberVo.name}</a>
+<%-- 				<a href='./update.do?no=${memberVo.no}'>${memberVo.name}</a> --%>
+				<a href='./selectOne.do?no=${memberVo.no}'>${memberVo.name}</a>
+
 			</td>
 			<td>${memberVo.email}</td>
 			<td>

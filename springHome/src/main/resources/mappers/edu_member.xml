@@ -30,10 +30,8 @@
 		<result column="MNAME" property="name" />
 		<result column="EMAIL" property="email" />
 		<result column="PWD" property="password" />
-		<result column="CRE_DATE" property="createDate"
-			javaType="java.util.Date" />
-		<result column="MOD_DATE" property="modifyDate"
-			javaType="java.util.Date" />
+		<result column="CRE_DATE" property="createDate"/>
+		<result column="MOD_DATE" property="modifyDate"/>
 	</resultMap>
 
 	<select id="memberSelectList" parameterType="map"
@@ -72,7 +70,7 @@
 	
 	<select id="memberSelectOne" parameterType="int"
 		resultMap="memberResultMap">
-		SELECT MNO, MNAME, EMAIL, CRE_DATE	
+		SELECT MNO, PWD, MNAME, EMAIL, CRE_DATE	
 		FROM MEMBER 
 		WHERE MNO = #{no}
 	</select>

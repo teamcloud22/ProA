@@ -20,8 +20,7 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Override
 	public List<MemberVo> memberSelectList(String searchOption
-			, String keyword, int start, int end) {
-		// TODO Auto-generated method stub
+			, String keyword, int start, int end) {  
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("searchOption", searchOption);
@@ -33,8 +32,7 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public MemberVo memberExist(String email, String password) {
-		// TODO Auto-generated method stub
+	public MemberVo memberExist(String email, String password) { 
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
@@ -45,27 +43,22 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public int memberInsertOne(MemberVo memberVo) {
-		// TODO Auto-generated method stub
-		
+	public int memberInsertOne(MemberVo memberVo) { 
 		return sqlSession.insert(nameSpace + "memberInsertOne", memberVo);
 	}
 
 	@Override
-	public MemberVo memberSelectOne(int no) {
-		// TODO Auto-generated method stub
+	public MemberVo memberSelectOne(int no) { 
 		return sqlSession.selectOne(nameSpace + "memberSelectOne", no);
 	}
 	
 	@Override
-	public int memberUpdateOne(MemberVo memberVo) {
-		// TODO Auto-generated method stub
+	public int memberUpdateOne(MemberVo memberVo) { 
 		return sqlSession.update(nameSpace + "memberUpdateOne", memberVo);
 	}
 
 	@Override
-	public void memberDeleteOne(int no) {
-		// TODO Auto-generated method stub
+	public void memberDeleteOne(int no) { 
 		sqlSession.delete(nameSpace + "memberDeleteOne", no);
 	}
 
@@ -79,6 +72,7 @@ public class MemberDaoImpl implements MemberDao{
 		
 		return sqlSession.selectOne(nameSpace + "memberSelectTotalCount", paramMap);
 	}
+ 
 }
 
 
