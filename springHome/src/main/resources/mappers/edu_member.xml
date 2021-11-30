@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.member">
+
+<!-- <choose> -->
+<!-- 	<when test="searchOption == 'all'"> -->
+<!--     	WHERE MNAME LIKE '%'||#{keyword}||'%' -->
+<!-- 	    OR EMAIL LIKE '%'||#{keyword}||'%' -->
+<!--  	</when> -->
+<!--     <otherwise> -->
+<!--     	where ${searchOption} LIKE '%'||#{keyword}||'%' -->
+<!--     </otherwise> -->
+<!-- </choose> -->
+
+	<sql id="search">
+		<choose>
+        	<when test="searchOption == 'all'">
+            	WHERE MNAME LIKE '%'||#{keyword}||'%'
+	            OR EMAIL LIKE '%'||#{keyword}||'%'
+            </when>
+            <otherwise>
+            	where ${searchOption} LIKE '%'||#{keyword}||'%'
+            </otherwise>
+        </choose> 
+	</sql> 
+
+	<resultMap type="memberVo" id="memberResultMap">
+		<id column="MNO" property="no" />
+		<result column="MNAME" property="name" />
+		<result column="EMAIL" property="email" />
+		<result column="PWD" property="password" />
+		<result column="CRE_DATE" property="createDate"
+			javaType="java.util.Date" />
+		<result column="MOD_DATE" property="modifyDate"
+			javaType="java.util.Date" />
+	</resultMap>
+
+	<select id="memberSelectList" parameterType="map"
+		resultMap="memberResultMap">
+		SELECT MEMBER.RNUM, MEMBER.MNO, MEMBER.MNAME, MEMBER.EMAIL
+			, MEMBER.CRE_DATE
+		FROM (	SELECT ROWNUM RNUM, M.MNO, M.MNAME, M.EMAIL, M.CRE_DATE
+        	FROM (  SELECT MNO, MNAME, EMAIL, CRE_DATE
+                	FROM MEMBER
+                	<include refid="search"></include>
+               		ORDER BY CRE_DATE DESC) M
+   			) MEMBER
+		WHERE MEMBER.RNUM BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="memberExist" parameterType="map"
+		resultMap="memberResultMap">
+		SELECT MNAME, EMAIL
+		FROM MEMBER
+		WHERE EMAIL= #{email}
+		AND PWD = #{password}
+	</select>
+	
+	<insert id="memberInsertOne" parameterType="memberVo">
+		INSERT INTO MEMBER (MNO, EMAIL, PWD, MNAME, CRE_DATE, MOD_DATE)
+		VALUES (MEMBER_MNO_SEQ.NEXTVAL, #{email}, #{password}, #{name},
+		SYSDATE, SYSDATE)
+	</insert>
+	  
+	<update id="memberUpdateOne" parameterType="memberVo">
+		UPDATE MEMBER 
+		SET EMAIL = #{email}, PWD = #{password},
+  			MNAME = #{name}, MOD_DATE = SYSDATE 
+		WHERE MNO = #{no}
+	</update>
+	
+	<select id="memberSelectOne" parameterType="int"
+		resultMap="memberResultMap">
+		SELECT MNO, MNAME, EMAIL, CRE_DATE	
+		FROM MEMBER 
+		WHERE MNO = #{no}
+	</select>
+	
+	<delete id="memberDeleteOne" parameterType="int">
+		DELETE FROM MEMBER 
+		WHERE MNO = #{value}
+	</delete>
+		
+	<select id="memberSelectTotalCount" parameterType="map"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM MEMBER
+		<include refid="search"></include>
+	</select>
+</mapper>
